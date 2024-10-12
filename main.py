@@ -45,4 +45,4 @@ while len(guessed_states) < 50:
         t.write(answer_state)
 
 
-#exit
+#end
