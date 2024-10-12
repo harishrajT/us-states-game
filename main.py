@@ -1,4 +1,6 @@
 import turtle
+from asyncio import all_tasks
+
 import pandas
 
 
@@ -23,6 +25,16 @@ while len(guessed_states) < 50:
     answer_state = screen.textinput(title= f"{len(guessed_states)}/50 Guess the other state",
                                     prompt="What's the other state?").title()
 
+    if answer_state == "Exit":
+        missing_states = [] # missed states by user
+        for state in states_list:
+            if state not in guessed_states:
+                missing_states.append(state)
+                # convert missed states to csv
+                new_data = pandas.DataFrame(missing_states)
+                new_data.to_csv("States_to_Learn.csv")
+        break
+
     if answer_state in states_list:  #check if it is in the csv file
         guessed_states.append(answer_state)
         t = turtle.Turtle()  #setup text box
@@ -33,7 +45,4 @@ while len(guessed_states) < 50:
         t.write(answer_state)
 
 
-
-
-
-turtle.mainloop()
+#exit
